@@ -33,3 +33,6 @@ Pass the "dataReceiver" to Microbit constructor
 ```
 const microbit = new MicrobitBLE(dataReceiver);
 ```
+
+### Remark
+Full example can be found in index.html and execute.js
