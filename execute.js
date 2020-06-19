@@ -1,5 +1,6 @@
 function directionReceived(angle) {
     console.log(angle);
+    setAngle(angle);
 }
 
 const dataReceiver = {

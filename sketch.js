@@ -6,7 +6,10 @@ function setup(){
     frameRate(10);
 }
 
-let i = 0;
+let angle = 0;
+function setAngle(angleReceived){
+    angle = angleReceived;
+}
 function draw(){
     push();
     background(205, 102, 94);
@@ -24,7 +27,7 @@ function draw(){
     pop();
 
     push();
-    //rotateY(i);
+    rotateY(angle);
     noStroke();
     ambientLight(255);
     ambientMaterial(255,255,0);
@@ -52,7 +55,6 @@ function draw(){
     ambientLight(255);
     ambientMaterial(139,69,19)
     sphere(110);
-    //i =  i + 50;
     ambientLight(255);
     ambientMaterial(0,0,0)
     translate(-30,-30,100);
