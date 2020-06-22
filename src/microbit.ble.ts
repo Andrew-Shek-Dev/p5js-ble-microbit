@@ -4,6 +4,7 @@ const UART_VALUE_CHANGED_EVENT = 'characteristicvaluechanged';
 
 export interface IDataReceiver{
     directionReceived:(angle:number)=>{}
+    lightIntensityReceived:(intensity:number)=>{}
 }
 
 export default class MicrobitBLE {
@@ -18,13 +19,18 @@ export default class MicrobitBLE {
         const service = await server.getPrimaryService(UART_Service_UUID);
         const characteristic = await service.getCharacteristic(UART_Service_RX_UUID);
         characteristic.startNotifications();
-        characteristic.addEventListener(UART_VALUE_CHANGED_EVENT,this.onReceiveDirection);
+        characteristic.addEventListener(UART_VALUE_CHANGED_EVENT,this.onDataURATReceive);
     }
 
-    onReceiveDirection=(event:any)=>{
+    onDataURATReceive = (event:any)=>{
         const view = event.target.value;
-        const value = new Uint8Array(view.buffer);
-        this.dataReceiver.directionReceived(String.fromCharCode.apply(String, value).split(":")[1]);
+        const data = new Uint8Array(view.buffer);
+        const dataSet = String.fromCharCode.apply(String, data).split(":");
+        if (dataSet[0] === "direction"){
+            this.dataReceiver.directionReceived(dataSet[1]);
+        }else{
+            this.dataReceiver.lightIntensityReceived(dataSet[1]);
+        }
     }
     
     disconnect=async()=>{

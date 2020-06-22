@@ -1,12 +1,13 @@
-let pg;
+let graphics;
 function setup(){
     let canvas = createCanvas(700,700,WEBGL);
     canvas.parent('canvas');
-    pg = createGraphics(500,500);
+    graphics = createGraphics(500,500);
     frameRate(1);
 }
 
 let angle = 0;
+let previousAngle = 0;
 function setAngle(angleReceived) {
     if (angleReceived < 90) {//N
         angle = PI;
@@ -19,25 +20,24 @@ function setAngle(angleReceived) {
     }
 }
 
-function draw(){
-    push();
-    background(205, 102, 94);
-    rotateX(-45);
-    translate(150,0,0);
+let intensity = 0;
+function setLightIntensity(intensityReceived){
+    intensity = intensityReceived;
+}
+
+function directionRefer(){
     line(200,200,200,500);
     line(200,200,210,210);
     line(200,200,190,210);
-    pg.textSize(40);
-    pg.textAlign(CENTER, CENTER);
-    pg.text('North',50,50);
-    texture(pg);
+    graphics.textSize(40);
+    graphics.textAlign(CENTER, CENTER);
+    graphics.text('North',50,50);
+    texture(graphics);
     noStroke();
     rect(150,130,500,500);
-    pop();
+}
 
-    push();
-    rotateY(0);
-    rotateY(angle);
+function flower(){
     noStroke();
     ambientLight(255);
     ambientMaterial(255,255,0);
@@ -72,5 +72,24 @@ function draw(){
     translate(60,0,0);
     sphere(10);
     noStroke();
+}
+
+function draw(){
+    push();
+    background(205, 102, 94);
+    rotateX(-45);
+    translate(150,0,0);
+    directionRefer();
+    pop();
+
+    push();
+    rotateY(0);
+    if (intensity > 200){
+        rotateY(angle);
+        previousAngle = angle;
+    }else{
+        rotateY(previousAngle)
+    }
+    flower();
     pop();
 }
