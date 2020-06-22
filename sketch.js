@@ -7,24 +7,18 @@ function setup(){
 }
 
 let angle = 0;
-function setAngle(angleReceived){
-    let lowerAngle = angleReceived - 5;
-    let higherAngle = angleReceived + 5;
-    if (angle >= lowerAngle && angle <= higherAngle){
-    }else{
-        console.log(angleReceived);
-        if (angleReceived < 90){//N
-            angle = PI;
-        }else if (angleReceived < 180){//E
-            angle = PI/4;
-        }else if (angleReceived < 270){//S
-            angle = 0;
-        }else{//W
-            angle = PI + 3*PI/4;
-        }
-        //angle = angleReceived;
+function setAngle(angleReceived) {
+    if (angleReceived < 90) {//N
+        angle = PI;
+    } else if (angleReceived < 180) {//E
+        angle = PI / 4;
+    } else if (angleReceived < 270) {//S
+        angle = 0;
+    } else {//W
+        angle = PI + 3 * PI / 4;
     }
 }
+
 function draw(){
     push();
     background(205, 102, 94);
