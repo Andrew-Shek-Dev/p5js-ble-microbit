@@ -24,8 +24,13 @@ function directionReceived(angle) {
     console.log(angle);
 }
 
+function lightIntensityReceived(intensity){
+    setLightIntensity(intensity);
+}
+
 const dataReceiver = {
-    directionReceived
+    directionReceived,
+    lightIntensityReceived
 }
 ```
 
