@@ -1,9 +1,9 @@
 function directionReceived(angle) {
-    setAngle(angle);
+    p5_Microbit_Connector.setAngle(angle);
 }
 
 function lightIntensityReceived(intensity){
-    setLightIntensity(intensity);
+    p5_Microbit_Connector.setLightIntensity(intensity);
 }
 
 const dataReceiver = {
