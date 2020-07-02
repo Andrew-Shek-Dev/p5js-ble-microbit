@@ -2,6 +2,8 @@
 let angle = 0;
 let previousAngle = 0;
 let intensity = 0;
+let check = 0;
+let totalFeatures = 0;
 
 export default class P5MicrobitConnector{
     setAngle(angleReceived) {
@@ -18,6 +20,29 @@ export default class P5MicrobitConnector{
 
     setLightIntensity(intensityReceived){
         intensity = intensityReceived;
+    }
+
+    updateCondition(features) {
+        totalFeatures = features.length;
+        for (let feature of features) {
+            if (feature.action === 'DIRECTION') {
+                if (feature.runStandalone) {
+                    this.rotate();
+                    totalFeatures = 0;
+                } else {
+                    check++;
+                }
+            } else if (feature.action === 'LIGHT') {
+                if (feature.runStandalone) {
+                    //TODO: Display Number
+                    totalFeatures = 0;
+                } else {
+                    if (intensity > feature.threshold) {
+                        check++;
+                    }
+                }
+            }
+        }
     }
 
     directionRefer(){
@@ -96,7 +121,8 @@ export default class P5MicrobitConnector{
         // }
         // this.flower();
         rotateY(-1*PI);
-        if (intensity > 200) {
+        //if (intensity > 200) {
+        if (check === totalFeatures){
             rotateY(angle);
             previousAngle = angle;
         } else {
@@ -114,5 +140,7 @@ export default class P5MicrobitConnector{
         scale(150);
         model(objModel);
         pop();
+        check = 0;
+        totalFeatures = 0;
     }
 }

@@ -16,9 +16,12 @@ function setup(){
 }
 
 function draw(){
-    for(let action of functions){
-        if (action === 'DIRECTION'){
+    p5_Microbit_Connector.updateCondition(features);
+    for(let feature of features){
+        if (feature.action === 'DIRECTION'){
             p5_Microbit_Connector.rotate();
+        }else if (feature.action === 'LIGHT'){
+            //TODO: Display Intensity
         }
     }
 }
